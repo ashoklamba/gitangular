@@ -21,7 +21,7 @@ module.exports = function(config){
       'app/requisition/*.js',
       'test/common/*.js',
       'test/unit/*.js',
-      'test/unit/user/*.js',
+      //'test/unit/user/*.js',
       'test/unit/requisition/*.js',
         //todo: is there a way to reduce the configuration ? Looks like if we don't have these two entries, behavior tests will fail
       {pattern: 'app/user/login-form.html', watched: true, served: true, included: false},
