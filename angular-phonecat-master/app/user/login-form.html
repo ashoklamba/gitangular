@@ -1,0 +1,61 @@
+<div class="row">
+    <div class="col-md-2">
+        <br>
+        Tutorial Tabs:
+        <info-tabs>
+            <info-pane type="info">
+                <li>should show tutorial infomation. info tab show feature user story. test tab show test coverage and
+                examples of tests.
+                </li>
+            </info-pane>
+            <info-pane type="test">
+                <li>click on a tab should select the tab. Click the tab again, should de-select the tab</li>
+                <li>When a tab is selected, corresponding information is shown in pane below.</li>
+                <li>When a tab is selected, its font should be in bold and click icon should be expanded.
+                    When a tab is de-selected, its font should not be in bold and click icon should not be expanded.
+                </li>
+                <li>
+                    At any given time, only one tab can be selected.
+                </li>
+                <li>
+                    <a href="https://docs.angularjs.org/guide/controller">click to see directive unit tests.</a>
+                </li>
+            </info-pane>
+        </info-tabs>
+        <br>
+        Login:
+        <info-tabs>
+            <info-pane type="info">
+                <li>should allow to enter username and password to login.</li>
+            </info-pane>
+            <info-pane type="test">
+                <li>
+                    verify if username is not set, login button
+                    should be disabled. If username is set, login button should be enabled.
+                    <a href="https://docs.angularjs.org/guide/controller">click to see unit test.</a>
+                </li>
+                <li>
+                    verify if button is clicked, login controller's login function is called.
+                    <a href="https://docs.angularjs.org/guide/controller">click to see unit test.</a>
+                </li>
+            </info-pane>
+          </info-tabs>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <h2>Login</h2>
+        <form name="form">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" name="username" id="username" ng-model="user.userName" placeholder="Enter username" required/>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" ng-model="user.password" placeholder="Enter password"/>
+            </div>
+            <div class="form-actions">
+                <button type="submit" id="login" class="btn btn-primary" ng-click="login()">Login</button>
+                <a href="#/register" class="btn btn-link">Register</a>
+            </div>
+        </form>
+    </div>
+</div>

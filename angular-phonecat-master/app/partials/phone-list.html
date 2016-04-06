@@ -1,0 +1,68 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-9">
+      <a href="#/requisitions">requisitions</a>
+      <user-profile></user-profile>
+      <log-out></log-out>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-2">
+      <!--Sidebar content-->
+
+      Search: <input ng-model="query">
+      <info-tabs>
+        <info-pane type="info">
+         <li>should allow to type text for free text search.</li>
+        </info-pane>
+        <info-pane type="test">
+          <li>
+            verify phone list is filtered by free text entered in the input box.
+            <a href="https://docs.angularjs.org/guide/controller">click to see protractor test.</a>
+          </li>
+        </info-pane>
+      </info-tabs>
+      <br>
+      Sort by:
+        <select ng-model="data.orderProp" id="QueryType">
+            <option ng-repeat="option in data.selectOptions" value="{{option.value}}">
+        {{option.name}}
+        </option>
+
+      </select>
+      <info-tabs>
+        <info-pane type="info">
+         <li>should allow to select order by criteria.</li>
+        </info-pane>
+        <info-pane type="test">
+          <li>
+            verify select shows each option that's passed to it.
+            <a href="https://docs.angularjs.org/guide/directives">click to see unit test.</a>
+          </li>
+          <li>
+            verify phone list is sorted by the order by criteria selected.
+            <a href="https://docs.angularjs.org/guide/directives">click to see protractor test.</a>
+          </li>
+        </info-pane>
+      </info-tabs>
+      <br>
+    </div>
+
+    <div class="col-md-10">
+      <!--Body content-->
+
+      <ul class="phones">
+        <li ng-repeat="phone in phones | filter:query | orderBy:data.orderProp"
+            class="thumbnail phone-listing">
+          <a href="#/phones/{{phone.id}}" class="thumb"><img ng-src="{{phone.imageUrl}}" alt="{{phone.name}}"></a>
+          <a href="#/phones/{{phone.id}}">{{phone.name}}</a>
+          <p>{{phone.snippet}}</p>
+          <div ng-repeat="item in phoneOptions" class="btn-group">
+            <phone-option data="item" id="{{phone.id}}" action="selectItem(x, y)"></phone-option>
+          </div>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+</div>
