@@ -1,0 +1,175 @@
+<div class="row">
+    <div class="col-md-10 col-md-offset-9">
+        <a href="#/phones">phones</a>
+        <user-profile></user-profile>
+        <log-out></log-out>
+    </div>
+</div>
+<div class="row requisition">
+    <a href="#requisitions"><ng-md-icon icon="keyboard_backspace" style="fill: blue" size="16"></ng-md-icon> All</a>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>UniqueName</th>
+            <th>Title</th>
+            <th>Last Modified</th>
+            <th>Amount in Dollar</th>
+            <th>Requester</th>
+            <th>Status</th>
+            <th>Approver</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{{ requisition.id }}</td>
+            <td>{{ requisition.title }}</td>
+            <td>{{ requisition.lastModified }}</td>
+            <td>{{ requisition.totalCost }}</td>
+            <td>{{ requisition.requesterId }}</td>
+            <td>{{ requisition.status }}</td>
+            <td>{{ requisition.approverId }}</td>
+        </tr>
+        </tbody>
+    </table>
+        <info-tabs>
+            <info-pane type="Line Items" selected="true">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th class="col-md-1">Item</th>
+                        <th class="col-md-1">Description</th>
+                        <th class="col-md-2">Justification</th>
+                        <th class="col-md-1">Amount</th>
+                        <th class="col-md-1">Quantity</th>
+                        <th class="col-md-1">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="lineItem in lineItems">
+                        <td class="col-md-1">
+                            <div class="img-responsive img-thumbnail">
+                                <img ng-src="{{lineItem.imageUrl}}" alt="{{lineItem.id}}" width="160" height="120">
+                            </div>
+                            <!--<a href="#/lineItems/{{lineItem.id}}">{{lineItem.id}}></a>-->
+                        </td>
+                        <td class="col-md-1">{{ lineItem.description }}</td>
+                        <td class="col-md-2">{{ lineItem.justification }}</td>
+                        <td class="col-md-1">{{ lineItem.amount }}</td>
+                        <td class="col-md-1">{{ lineItem.quantity }}</td>
+                        <td class="col-md-1">
+                          <div ng-controller="RequisitionDetailCtrl" class="container">
+                            <button ng-click="toggleModal()" class="btn btn-default">Line Item {{$index+1}}</button>
+                            <modal title="{{requisition.id}}: Line Item {{$index+1}} - {{lineItem.description}}" visible="showModal">
+                                <p class="requisition-images row">
+                                   <img ng-src="{{lineItem.imageUrl}}" alt="{{lineItem.id}}">
+                                </p>
+                                <p class="row">
+                                     <h4>Summary</h4>
+                                </p>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Description</th>
+                                        <th>Justification</th>
+                                        <th>Amount</th>
+                                        <th>Quantity</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>{{ lineItem.id }}</td>
+                                        <td>{{ lineItem.description }}</td>
+                                        <td>{{ lineItem.justification }}</td>
+                                        <td>{{ lineItem.amount }}</td>
+                                        <td>{{ lineItem.quantity }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p><h4>Accountings</h4></p>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Percentage</th>
+                                        <th>Amount</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-init="getAccountings(lineItem)">
+                                    <tr ng-repeat="accounting in accountings">
+                                        <td>{{ accounting.id }}</td>
+                                        <td>{{ accounting.percentage }}</td>
+                                        <td>{{ accounting.amount }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <p><h4>Comments</h4></p>
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Text</th>
+                                        <th>Date</th>
+                                        <th>User</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody ng-init="getComments(lineItem)">
+                                    <tr ng-repeat="comment in comments">
+                                        <td>{{ comment.id }}</td>
+                                        <td>{{ comment.text }}</td>
+                                        <td>{{ comment.date }}</td>
+                                        <td>{{ comment.userId }}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </modal>
+                          </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+            </info-pane>
+            <info-pane type="Comments">
+                <form ng-submit="submit()" ng-controller="RequisitionDetailCtrl">
+                    <b>Enter comment and submit:</b>
+                    <input type="text" ng-model="comment.text" name="text" size="76"/>
+                    <input class="btn-xs btn-primary" type="submit" id="submit" value="Post" />
+                </form>
+                <table class="table table-striped table-bordered">
+                    <thead ng-init="getRequisitionComments()">
+                    <tr>
+                        <th>Text</th>
+                        <th>Date</th>
+                        <th>User</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr ng-repeat="comment in reqComments | orderBy: '-date'">
+                        <td>{{ comment.text }}</td>
+                        <td>{{ comment.date }}</td>
+                        <td>{{ comment.userId }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </info-pane>
+            <info-pane type="History">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Summary</th>
+                        <th>Date</th>
+                    </tr>
+                    </thead>
+                    <tr ng-repeat="record in records">
+                        <td>{{ record.id }}</td>
+                        <td>{{ record.summary }}</td>
+                        <td>{{ record.date }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </info-pane>
+    </info-tabs>
+
+</div>
+

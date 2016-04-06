@@ -1,0 +1,43 @@
+<div class="row">
+    <div class="col-md-8 col-md-offset-7">
+        <a href="#/requisitions">requisitions</a>
+        <user-profile></user-profile>
+        <log-out></log-out>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <info-tabs>
+            <info-pane type="info">
+                <li>should allow to update phone age and summary info.</li>
+            </info-pane>
+            <info-pane type="test">
+                <li>
+                    verify phone is retrieved from backend when this page is open.
+                    <a href="https://docs.angularjs.org/guide/controller">click to see unit test.</a>
+                </li>
+                <li>
+                    verify update service should send PUT request with  phone info and phone id as parameters.
+                    <a href="https://docs.angularjs.org/guide/controller">click to see unit test.</a>
+                </li>
+            </info-pane>
+        </info-tabs>
+    </div>
+    <div  class="col-md-8">
+        <h2>{{phone.name}}</h2>
+        <form name="updatePhoneForm">
+            <fieldset class="form-group">
+                <label for="age">Age</label>
+                <input type="text" class="form-control" id="age" ng-model="phone.age" ng-click="phone.age=''">
+                <small class="text-muted">Please update phone age</small>
+            </fieldset>
+            <fieldset class="form-group">
+                <label for="summary">Summary</label>
+                <textarea class="form-control" id="summary" rows="5" ng-model="phone.snippet" ng-click="phone.snippet=''"></textarea>
+                <small class="text-muted">Please update phone summary</small>
+            </fieldset>
+            <button type="submit" class="btn btn-primary" ng-click="update(phone, username)">Submit</button>
+            <br>
+        </form>
+    </div>
+</div>
